@@ -1,6 +1,6 @@
 {
 	"name": "SGTrainCreator",
-	"main": "index.html",
+	"main": "lib/index.html",
 	"devDependencies": {
 		"nw-builder": "^3.1.0"
 	},
