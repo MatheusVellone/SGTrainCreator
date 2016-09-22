@@ -1,8 +1,13 @@
 {
-	"name": "SGTrainCreator",
-	"main": "lib/index.html",
-	"devDependencies": {
-		"nw-builder": "^3.1.0"
-	},
-	"version" : "0.0.1"
+  "name": "SGTrainCreator",
+  "main": "lib/index.html",
+  "description": "SteamGifts giveaway Train generator",
+  "repository": "https://github.com/MatheusVellone/SGTrainCreator",
+  "devDependencies": {
+    "nw-builder": "^3.1.0"
+  },
+  "version": "0.0.1",
+  "dependencies": {
+    "request": "^2.75.0"
+  }
 }
