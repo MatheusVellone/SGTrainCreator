@@ -9,5 +9,16 @@
   "version": "0.0.1",
   "dependencies": {
     "request": "^2.75.0"
+  },
+  "window": {
+    "title": "SteamGifts Train Creator",
+    "icon": "lib/img/steamgifts.ico",
+    "toolbar": true,
+    "width": 800,
+    "height": 500,
+    "min_width": 400,
+    "min_height": 200,
+    "max_width": 800,
+    "max_height": 600
   }
 }
