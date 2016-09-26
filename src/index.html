@@ -1,18 +1,30 @@
 <html>
 <head>
     <title>SteamGifts TrainCreator</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.js">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/lib/css/style.css">
 </head>
 <body>
 	<header></header>
 	<div class="container-fluid">
-		<input id="search-game" type="text" class="form-control">
-		<div id="search-game-results"></div>
+		<div id="form" class="col-md-12">
+			<div class="form-group">
+				<label for="cookie">Session Cookie</label>
+				<input type="text" class="form-control" id="cookie" placeholder="Session Cookie" value="Cookie for testing">
+			</div>
+			<div class="form-group">
+				<label for="search-games">Games</label>
+				<input type="text" class="form-control" id="search-games" placeholder="Start typing a game...">
+			</div>
+		</div>
+		<div id="search-games-result" class="col-md-12">HTML that came from SG ajax request</div>
 	</div>
 	<footer></footer>
-	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="/lib/js/jquery-3.1.1.min.js"></script>
     <script src="js/menu.js"></script>
     <!-- <script src="js/contextMenu.js"></script> -->
     <script src="js/reload.js"></script>
+    <script src="js/mainScript.js"></script>
 </body>
 </html>
