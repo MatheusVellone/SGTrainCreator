@@ -8,6 +8,7 @@
   },
   "version": "0.0.1",
   "dependencies": {
+    "cheerio": "^0.22.0",
     "request": "^2.75.0"
   },
   "window": {

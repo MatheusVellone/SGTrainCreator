@@ -1,19 +1,35 @@
 var baseAjaxUrl = 'https://www.steamgifts.com/ajax.php';
 var request = require('request');
+var utils = require('./Utils');
 
 $(function () {
-	$('#search-games').on('keyup', function () {
+	document.getElementById('search-games').addEventListener('keyup', function () {
 		delay(function (){
 			customAjax({
-				data: {
-					search_query: "bor",
+				form: {
+					search_query: document.getElementById('search-games').value,
                     page_number: 1,
-                    "do": "autocomplete_game"
+                    do: "autocomplete_game"
 				}
 			}, function (data) {
-				$('#search-games-result').html(data);
+				var cheerio = require('cheerio');
+				var gamesResult = [];
+				var html = $(data.html).find('.table__rows').each(function (game) {
+					var $game = $(game);
+					var game = {
+						title: $game.data('autocomplete-name'),
+						id: $game.data('autocomplete-id'),
+						image: utils.stringBetween($game.find('.global__image-inner-wrap').css('background-image'), 'url(', ')')
+					};
+
+					gamesResult.push(game);
+				});
+
+				console.log(gamesResult);
+
+				document.getElementById('search-games-result').innerHTML = data.html;
 			});
-		}, 1000)
+		}, 500)
 	});
 });
 
@@ -29,15 +45,14 @@ var customAjax = function(obj, callback) {
 	obj = $.extend({
 		url: baseAjaxUrl,
 		headers: {
-			"Cookie": $('#cookie').val(),
+			"Cookie": document.getElementById('cookie').value,
 			"User-Agent": navigator.userAgent
         },
 	}, obj);
 
-	request.post(obj, function (error, response, html) {
+	request.post(obj, function (error, response, data) {
 		if (!error && response.statusCode === 200) {
-			console.log(error, response, html);
-			callback('-' + html + '-');
+			callback(JSON.parse(data));
 		} else {
 			console.error(error, response);
 		}
