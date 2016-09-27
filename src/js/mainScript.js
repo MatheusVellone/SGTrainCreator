@@ -1,6 +1,6 @@
 var baseAjaxUrl = 'https://www.steamgifts.com/ajax.php';
 var request = require('request');
-var utils = require('./Utils');
+var utils = require('./src/js/Utils');
 
 $(function () {
 	document.getElementById('search-games').addEventListener('keyup', function () {
@@ -12,20 +12,34 @@ $(function () {
                     do: "autocomplete_game"
 				}
 			}, function (data) {
-				var cheerio = require('cheerio');
-				var gamesResult = [];
-				var html = $(data.html).find('.table__rows').each(function (game) {
+				var searchResult = {};
+				searchResult.gamesResult = [];
+				console.log($(data.html));
+				var $html = $(data.html);
+				$html.find('.table__rows > div').each(function (index, game) {
 					var $game = $(game);
 					var game = {
 						title: $game.data('autocomplete-name'),
 						id: $game.data('autocomplete-id'),
 						image: utils.stringBetween($game.find('.global__image-inner-wrap').css('background-image'), 'url(', ')')
 					};
-
-					gamesResult.push(game);
+					searchResult.gamesResult.push(game);
 				});
 
-				console.log(gamesResult);
+				searchResult.pagination = {
+					currentPage: $html.find('div.pagination__navigation > a.is-selected').data('page-number'),
+					resultsCount: parseInt($html.find('div.pagination__results > strong:nth-child(3)').text().replace(',', '')),
+					availablePages: []
+				};
+				$html.find('div.pagination__navigation > a').each(function (index, element) {
+					if (element.children.length === 1) {
+						searchResult.pagination.availablePages.push(element.getAttribute('data-page-number'))
+					}
+				});
+
+				$('<div></div>').addClass('game');
+
+				console.log(searchResult);
 
 				document.getElementById('search-games-result').innerHTML = data.html;
 			});
@@ -52,7 +66,8 @@ var customAjax = function(obj, callback) {
 
 	request.post(obj, function (error, response, data) {
 		if (!error && response.statusCode === 200) {
-			callback(JSON.parse(data));
+			var json = JSON.parse(data);
+			callback(json);
 		} else {
 			console.error(error, response);
 		}

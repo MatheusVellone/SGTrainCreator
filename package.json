@@ -1,6 +1,6 @@
 {
   "name": "SGTrainCreator",
-  "main": "src/index.html",
+  "main": "index.html",
   "description": "SteamGifts giveaway Train generator",
   "repository": "https://github.com/MatheusVellone/SGTrainCreator",
   "devDependencies": {
@@ -15,7 +15,8 @@
     "title": "SteamGifts Train Creator",
     "icon": "lib/img/steamgifts.ico",
     "toolbar": true,
-    "width": 1366,
-    "height": 768
+    "position": "center",
+    "width": 500,
+    "height": 300
   }
 }
