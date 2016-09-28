@@ -16,34 +16,48 @@ $(function () {
 				searchResult.gamesResult = [];
 				console.log($(data.html));
 				var $html = $(data.html);
+				var $gamesList = $('<div>').addClass('games-list');
 				$html.find('.table__rows > div').each(function (index, game) {
 					var $game = $(game);
-					var game = {
+					var gameData = {
 						title: $game.data('autocomplete-name'),
 						id: $game.data('autocomplete-id'),
 						image: utils.stringBetween($game.find('.global__image-inner-wrap').css('background-image'), 'url(', ')')
 					};
-					searchResult.gamesResult.push(game);
+
+					var $gameTitle = $('<span>').text(gameData.title).addClass('h3');
+					$gameTitle = $('<div>').append($gameTitle).addClass('col-md-8');
+					var $gameImage = $('<img>').attr('src', gameData.image).addClass('game-img img-responsive');
+					$gameImage = $('<div>').append($gameImage).addClass('col-md-4');
+
+					var $gameItem = $('<div>')
+						.addClass('game-item row')
+						.data('game-id', gameData.id)
+						.append($gameImage)
+						.append($gameTitle);
+
+					$gamesList.append($gameItem);
 				});
 
-				searchResult.pagination = {
-					currentPage: $html.find('div.pagination__navigation > a.is-selected').data('page-number'),
-					resultsCount: parseInt($html.find('div.pagination__results > strong:nth-child(3)').text().replace(',', '')),
-					availablePages: []
-				};
+				var $paginator = $('<div>').addClass('paginator');
+				var currentPage = $html.find('div.pagination__navigation > a.is-selected').data('page-number');
 				$html.find('div.pagination__navigation > a').each(function (index, element) {
 					if (element.children.length === 1) {
-						searchResult.pagination.availablePages.push(element.getAttribute('data-page-number'))
+						var pageNumber = element.getAttribute('data-page-number');
+						var $page = $('<a>').addClass('page-number').text(pageNumber);
+						if (currentPage == pageNumber) {
+							$page.addClass('current-page');
+						}
+						$paginator.append($page);
 					}
 				});
 
-				$('<div></div>').addClass('game');
-
-				console.log(searchResult);
-
-				document.getElementById('search-games-result').innerHTML = data.html;
+				$('#search-games-result').html($gamesList).append($paginator);;
 			});
 		}, 500)
+	});
+	$(document).on('click', '.game-item', function () {
+		//Selected game. Game ID on data-id attribute
 	});
 });
 
