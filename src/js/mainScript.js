@@ -26,12 +26,10 @@ $(function () {
 					};
 
 					var $gameTitle = $('<span>').text(gameData.title).addClass('h3');
-					$gameTitle = $('<div>').append($gameTitle).addClass('col-md-8');
 					var $gameImage = $('<img>').attr('src', gameData.image).addClass('game-img img-responsive');
-					$gameImage = $('<div>').append($gameImage).addClass('col-md-4');
 
 					var $gameItem = $('<div>')
-						.addClass('game-item row')
+						.addClass('game-item text-center')
 						.data('game-id', gameData.id)
 						.append($gameImage)
 						.append($gameTitle);
@@ -39,7 +37,7 @@ $(function () {
 					$gamesList.append($gameItem);
 				});
 
-				var $paginator = $('<div>').addClass('paginator');
+				var $paginator = $('<span>').addClass('paginator');
 				var currentPage = $html.find('div.pagination__navigation > a.is-selected').data('page-number');
 				$html.find('div.pagination__navigation > a').each(function (index, element) {
 					if (element.children.length === 1) {
