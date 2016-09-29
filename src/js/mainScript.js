@@ -3,6 +3,7 @@ var request = require('request');
 var utils = require('./src/js/Utils');
 
 $(function () {
+	getTestCookie();
 	document.getElementById('search-games').addEventListener('keyup', function () {
 		delay(function (){
 			customAjax({
@@ -82,6 +83,15 @@ var customAjax = function(obj, callback) {
 			callback(json);
 		} else {
 			console.error(error, response);
+		}
+	});
+}
+
+var getTestCookie = function () {
+		$.ajax('../cookie.json', {
+		dataType: 'json',
+		success: function (data){
+			document.getElementById('cookie').value = data.cookie;
 		}
 	});
 }
