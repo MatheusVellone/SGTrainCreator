@@ -15,9 +15,10 @@ $(function () {
 			}, function (data) {
 				var searchResult = {};
 				searchResult.gamesResult = [];
-				console.log($(data.html));
+
 				var $html = $(data.html);
 				var $gamesList = $('<div>').addClass('games-list');
+				var result = $('#search-games-result').empty();
 				$html.find('.table__rows > div').each(function (index, game) {
 					var $game = $(game);
 					var gameData = {
@@ -30,33 +31,37 @@ $(function () {
 					var $gameImage = $('<img>').attr('src', gameData.image).addClass('game-img img-responsive');
 
 					var $gameItem = $('<div>')
-						.addClass('game-item text-center')
-						.data('game-id', gameData.id)
+						.addClass('game-item text-center result-column')
+						.attr('data-game-id', gameData.id)
 						.append($gameImage)
 						.append($gameTitle);
 
-					$gamesList.append($gameItem);
+					result.append($gameItem);
 				});
 
-				var $paginator = $('<span>').addClass('paginator');
-				var currentPage = $html.find('div.pagination__navigation > a.is-selected').data('page-number');
-				$html.find('div.pagination__navigation > a').each(function (index, element) {
-					if (element.children.length === 1) {
-						var pageNumber = element.getAttribute('data-page-number');
-						var $page = $('<a>').addClass('page-number').text(pageNumber);
-						if (currentPage == pageNumber) {
-							$page.addClass('current-page');
-						}
-						$paginator.append($page);
-					}
-				});
+				// no paginator for now
 
-				$('#search-games-result').html($gamesList).append($paginator);;
+				// var $paginator = $('<ul>').addClass('paginator result-column');
+				// var currentPage = $html.find('div.pagination__navigation > a.is-selected').data('page-number');
+				// $html.find('div.pagination__navigation > a').each(function (index, element) {
+				// 	if (element.children.length === 1) {
+				// 		var pageNumber = element.getAttribute('data-page-number');
+				// 		var $page = $('<li>').html(
+				// 			$('<a>').addClass('page-number').text(pageNumber)
+				// 		);
+				// 		if (currentPage == pageNumber) {
+				// 			$page.addClass('current-page');
+				// 		}
+				// 		$paginator.append($page);
+				// 	}
+				// });
+				// result.append($paginator);
 			});
 		}, 500)
 	});
-	$(document).on('click', '.game-item', function () {
+	$(document).on('click', '.game-item', function (event) {
 		//Selected game. Game ID on data-id attribute
+		document.getElementById('game-id').value = this.getAttribute('data-game-id');
 	});
 });
 

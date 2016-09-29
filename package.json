@@ -16,7 +16,7 @@
     "icon": "lib/img/steamgifts.ico",
     "toolbar": true,
     "position": "center",
-    "min_width": 1366,
-    "min_height": 768
+    "min_width": 800,
+    "min_height": 600
   }
 }

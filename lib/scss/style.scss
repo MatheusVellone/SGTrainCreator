@@ -17,12 +17,14 @@
 	border-radius: 10px;
 	background-color: $scrollbar-thumb-color;
 }
-.games-list {
+#search-games-result {
 	display: flex;
 	flex-wrap: wrap;
 	margin: 0 -15px;
 	.game-item {
-		flex: 1 20%;
+		cursor: pointer;
+		flex: 1;
+		max-width: 20%;
 		padding: 0 15px 15px;
 		img {
 			margin: auto;
