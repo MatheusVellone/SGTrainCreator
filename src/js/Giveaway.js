@@ -1,0 +1,3 @@
+Giveaway = function () {
+	return this;
+}

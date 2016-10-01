@@ -3,32 +3,120 @@
     <title>SteamGifts TrainCreator</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="lib/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="lib/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="lib/css/style.css">
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.steamgifts.com/css/minified_v11.css"> -->
 </head>
 <body>
-	<header></header>
-	<div class="container-fluid">
-		<div id="form" class="row">
-			<div class="col-xs-2">
-				<div class="form-group">
-					<label for="cookie">Session Cookie</label>
-					<input type="text" class="form-control" id="cookie" placeholder="Session Cookie" value="">
-				</div>
-				<input type="hidden" id="game-id" value="">
-			</div>
-			<div class="col-xs-10">
-				<div class="form-group">
-					<label for="search-games">Giveaway Game</label>
-					<input type="text" class="form-control" id="search-games" placeholder="Start typing a game...">
-				</div>
-			</div>
-		</div>
-		<div id="search-games-result">
-		</div>
-	</div>
-	<footer></footer>
-	<script src="lib/js/jquery-3.1.1.min.js"></script>
+    <header></header>
+    <div class="container-fluid">
+        <div class="row session-info">
+            <div class="col-xs-9">
+                <label for="cookie">Session Cookie</label>
+                <input type="text" class="form-control" id="cookie" placeholder="Session Cookie">
+            </div>
+            <div class="col-xs-3">
+                <div id="user-avatar">
+                    <img src="" class="img-responsive">
+                    <div class="sk-cube-grid avatar-loading loading">
+                        <div class="sk-cube sk-cube1"></div>
+                        <div class="sk-cube sk-cube2"></div>
+                        <div class="sk-cube sk-cube3"></div>
+                        <div class="sk-cube sk-cube4"></div>
+                        <div class="sk-cube sk-cube5"></div>
+                        <div class="sk-cube sk-cube6"></div>
+                        <div class="sk-cube sk-cube7"></div>
+                        <div class="sk-cube sk-cube8"></div>
+                        <div class="sk-cube sk-cube9"></div>
+                    </div>
+                </div>
+                <span id="username">No cookie</span>
+            </div>
+        </div>
+        <div class="row">
+                <div class="train-games">
+                    <div class="train-item">
+
+                    </div>
+                    <!--LIST WITH TRAIN GAMES-->
+                </div>
+            </div>
+        <form id="train-item">
+            <div class="row">
+                <div class="col-xs-6">
+                    <label for="start-time">Start Time / End Time</label>
+                    <div class="form-group">
+                        <input type="datetime" class="form-control" name="start_time" id="start-time" placeholder="Start Time" required>
+                        <input type="datetime" class="form-control" name="end_time" id="end-time" placeholder="End Time" required>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <label for="visibility">Train visibility</label>
+                    <select id="visibility" class="form-control" required>
+                        <option value="">Select giveaways visibility</option>
+                        <option value="everyone">Everyone</option>
+                        <option value="invite_only">Invite Only</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row individual-giveaway-info">
+                <input type="hidden" name="game_id" id="game-id">
+                <input type="hidden" name="xsrf_token" id="xsrf_token">
+                <input type="hidden" name="next_step" value="3">
+                <div class="col-xs-10">
+                    <div class="form-group">
+                        <label for="search-games">Giveaway Game</label>
+                        <input type="text" class="form-control" id="search-games" placeholder="Start typing a game...">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <label for="giveaway-type">Type</label>
+                    <div class="custom-radio">
+                        <input type="radio" name="type" id="type-key">
+                        <label for="type-key">
+                            <i class="fa fa-key"></i>
+                            Key
+                        </label>
+                    </div>
+                    <div class="custom-radio">
+                        <input type="radio" name="type" id="type-gift">
+                        <label for="type-gift">
+                            <i class="fa fa-gift"></i>
+                            Gift
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <label for="copies">Copies</label>
+                    <input type="number" name="copies" class="form-control" min="1" value="1">
+                </div>
+                <div class="col-xs-3">
+                    <label for="contributor-level">Contributor Level</label>
+                    <input type="number" name="contributor_level" class="form-control" id="contributor-level" min="1" max="10" value="1">
+                </div>
+                <div class="col-xs-4">
+                    <label for="region">Region</label>
+                    <select class="form-control">
+                        <option value="0">None</option>
+                        <option value="8">China</option>
+                        <option value="10">Germany</option>
+                        <option value="9">Hong Kong + Taiwan</option>
+                        <option value="7">India</option>
+                        <option value="6">Poland</option>
+                        <option value="2">RU + CIS</option>
+                        <option value="3">SE Asia</option>
+                        <option value="1">South America</option>
+                        <option value="4">Turkey</option>
+                    </select>
+                </div>
+            </div>
+            <input type="submit" value="Add this giveaway to train list" class="btn btn-primary">
+        </form>
+        <div id="search-games-result">
+        </div>
+    </div>
+    <footer></footer>
+    <script src="lib/js/jquery-3.1.1.min.js"></script>
     <script src="src/js/menu.js"></script>
     <!-- <script src="js/contextMenu.js"></script> -->
     <script src="src/js/reload.js"></script>

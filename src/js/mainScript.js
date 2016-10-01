@@ -1,18 +1,20 @@
 var baseAjaxUrl = 'https://www.steamgifts.com/ajax.php';
+var newGiveawayUrl = 'https://www.steamgifts.com/giveaways/new';
 var request = require('request');
 var utils = require('./src/js/Utils');
 
 $(function () {
-	getTestCookie();
 	document.getElementById('search-games').addEventListener('keyup', function () {
 		delay(function (){
-			customAjax({
+			steamGiftsRequest('post', {
+				url: baseAjaxUrl,
 				form: {
 					search_query: document.getElementById('search-games').value,
                     page_number: 1,
                     do: "autocomplete_game"
 				}
 			}, function (data) {
+				data = JSON.parse(data);
 				var searchResult = {};
 				searchResult.gamesResult = [];
 
@@ -63,6 +65,14 @@ $(function () {
 		//Selected game. Game ID on data-id attribute
 		document.getElementById('game-id').value = this.getAttribute('data-game-id');
 	});
+	$('#cookie').on('input', updateCookieInformation);
+	$('#train-item').on('submit', function (event) {
+		event.preventDefault();
+		var formData = {};
+		$(this).serializeArray().map(function(x){formData[x.name] = x.value;});;
+		console.log(formData);
+	})
+	getTestCookie();
 });
 
 var delay = (function(){
@@ -73,30 +83,58 @@ var delay = (function(){
 	};
 })();
 
-var customAjax = function(obj, callback) {
+function steamGiftsRequest(method, obj, callback, errorCallback) {
+	method = method || 'get';
 	obj = $.extend({
-		url: baseAjaxUrl,
 		headers: {
 			"Cookie": document.getElementById('cookie').value,
 			"User-Agent": navigator.userAgent
         },
 	}, obj);
 
-	request.post(obj, function (error, response, data) {
+	request[method](obj, function (error, response, data) {
 		if (!error && response.statusCode === 200) {
-			var json = JSON.parse(data);
-			callback(json);
+			callback(data);
 		} else {
-			console.error(error, response);
+			if (errorCallback) {
+				errorCallback(error, response);
+			} else {
+				console.error(error, response);
+			}
 		}
 	});
 }
 
-var getTestCookie = function () {
-		$.ajax('../cookie.json', {
+function getTestCookie() {
+	$.ajax('../cookie.json', {
 		dataType: 'json',
 		success: function (data){
 			document.getElementById('cookie').value = data.cookie;
 		}
+	});
+}
+
+function updateCookieInformation() {
+	$('.avatar-loading').fadeIn();
+	$('#xsrf_token').val('');
+	$('#username').text('Loading cookie session');
+	$('#user-avatar img').attr('src', '');
+	steamGiftsRequest('get', {url: newGiveawayUrl}, function (data) {
+		$('.avatar-loading').hide();
+		var $html = $(data);
+		$('#xsrf_token').val($html.find('input[name=xsrf_token]').val());
+
+		var usernameLink = $html.find('.nav__avatar-outer-wrap').attr('href');
+		var cookieUsername = usernameLink.substr(usernameLink.lastIndexOf('/') + 1);
+		$('#username').text(cookieUsername);
+
+		var userAvatar = $html.find('.nav__avatar-inner-wrap').css('background-image');
+		userAvatar = utils.stringBetween(userAvatar, 'url(', ')');
+		$('#user-avatar img').attr('src', userAvatar);
+	}, function (error, response) {
+		$('.avatar-loading').hide();
+		$('#xsrf_token').val('');
+		$('#username').text('Invalid cookie');
+		$('#user-avatar img').attr('src', '');
 	});
 }

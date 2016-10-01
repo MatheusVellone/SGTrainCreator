@@ -1,0 +1,14 @@
+xsrf_token:
+next_step:3
+game_id:3597
+type:gift
+copies:1
+key_string:
+start_time:Oct 1, 2016 3:45 pm
+end_time:Oct 1, 2016 8:46 pm
+region:0
+group_string:
+who_can_enter:invite_only
+whitelist:
+contributor_level:1
+description:

@@ -6,16 +6,14 @@ var menubar = new gui.Menu({
 
 var sub1 = new gui.Menu();
 sub1.append(new gui.MenuItem({
-    label: 'Test1',
+    label: 'Reload',
     click: function() {
-        var element = document.createElement('div');
-        element.appendChild(document.createTextNode('Test 1'));
-        document.body.appendChild(element);
+        location.reload();
     }
 }));
 
 menubar.append(new gui.MenuItem({
-    label: 'Sub1',
+    label: 'File',
     submenu: sub1
 }));
 win.menu = menubar;
