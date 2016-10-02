@@ -7,9 +7,11 @@ Train.prototype.size = function() {
 	return this.giveaways.length;
 };
 
-Train.prototype.addGiveaway = function () {
-	var giveaway = {
+Train.prototype.addGiveaway = function (giveaway) {
+    console.log(giveaway);
+	this.giveaways.push(giveaway);
+}
 
-	};
-	this.giveaways.push(new Giveaway(giveaway));
+Train.prototype.render = function () {
+
 }

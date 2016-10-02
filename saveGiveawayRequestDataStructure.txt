@@ -12,3 +12,11 @@ who_can_enter:invite_only
 whitelist:
 contributor_level:1
 description:
+
+xsrf_token
+next_step
+game_id
+copies
+end_time
+region
+start_time

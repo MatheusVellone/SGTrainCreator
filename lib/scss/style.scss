@@ -21,11 +21,15 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin: 0 -15px;
+	background-color: #c8c8c8;
 	.game-item {
 		cursor: pointer;
 		flex: 1;
-		max-width: 20%;
-		padding: 0 15px 15px;
+		margin: 0 10px 15px;
+		padding: 5px 5px 0;
+		&:hover, &.selected {
+			border: 1px solid #eaaeae;
+		}
 		img {
 			margin: auto;
 		}
@@ -55,13 +59,20 @@
 		display: none;
 		&:checked {
 			color: #198283;
-			& + label i {
-				color: #0000ff;
+			& + label {
+				i {
+					color: #0000ff;
+				}
 			}
 		}
 		&:not(:checked) {
-			& + label i {
-				color: #999999;
+			& + label {
+				&:hover i {
+					color: #7777ff;
+				}
+				i {
+					color: #999999;
+				}
 			}
 		}
 	}
